@@ -1,0 +1,178 @@
+<Window x:Class="AudioMonitor.UI.MainWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="Audio Monitor — Windows 11" Height="760" Width="1120" MinHeight="660" MinWidth="900"
+ Background="#0B1118" Foreground="#F2F6FC" WindowStartupLocation="CenterScreen">
+ <Window.Resources>
+  <SolidColorBrush x:Key="PanelBrush" Color="#121C27"/>
+  <SolidColorBrush x:Key="PanelBorderBrush" Color="#243444"/>
+  <SolidColorBrush x:Key="MutedBrush" Color="#91A4B8"/>
+  <Style TargetType="Button">
+   <Setter Property="Foreground" Value="#F2F6FC"/>
+   <Setter Property="Background" Value="#1A2A38"/>
+   <Setter Property="BorderBrush" Value="#31495A"/>
+   <Setter Property="BorderThickness" Value="1"/>
+   <Setter Property="Padding" Value="16,10"/>
+   <Setter Property="FontSize" Value="14"/>
+   <Setter Property="FontWeight" Value="SemiBold"/>
+   <Setter Property="Cursor" Value="Hand"/>
+   <Setter Property="Template">
+    <Setter.Value>
+     <ControlTemplate TargetType="Button">
+      <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+       <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+      </Border>
+      <ControlTemplate.Triggers>
+       <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="#23394A"/></Trigger>
+       <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45"/></Trigger>
+      </ControlTemplate.Triggers>
+     </ControlTemplate>
+    </Setter.Value>
+   </Setter>
+  </Style>
+ </Window.Resources>
+ <Grid Margin="28,24">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Grid Grid.Row="0" Margin="0,0,0,24">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+    <Border Width="44" Height="44" CornerRadius="12" Background="#153344" Margin="0,0,14,0">
+     <TextBlock Text="♫" FontSize="28" Foreground="#68E0C0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0"/>
+    </Border>
+    <StackPanel VerticalAlignment="Center">
+     <TextBlock Text="AUDIO MIXER" FontSize="24" FontWeight="Bold"/>
+     <TextBlock Text="LIVE WINDOWS OUTPUT · WASAPI LOOPBACK" FontSize="11" Foreground="{StaticResource MutedBrush}"/>
+    </StackPanel>
+   </StackPanel>
+   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+    <CheckBox x:Name="MinimizeToTrayCheckBox" Content="Keep in tray" IsChecked="True" Margin="0,0,16,0" Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center"/>
+    <Button x:Name="StartButton" Content="Start monitoring" Click="Start_Click" Background="#0E806C" BorderBrush="#23B79A" Margin="0,0,8,0"/>
+    <Button x:Name="StopButton" Content="Stop" Click="Stop_Click" IsEnabled="False"/>
+   </StackPanel>
+  </Grid>
+
+  <Border Grid.Row="1" Background="#101B25" BorderBrush="#203140" BorderThickness="1" CornerRadius="12" Padding="16,12" Margin="0,0,0,18">
+   <Grid>
+    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+     <Ellipse x:Name="CaptureStatusDot" Width="9" Height="9" Fill="#607487" Margin="0,0,10,0"/>
+     <TextBlock x:Name="StatusText" Text="Stopped" FontSize="14" FontWeight="SemiBold"/>
+     <TextBlock Text="  ·  Default playback device" FontSize="13" Foreground="{StaticResource MutedBrush}"/>
+    </StackPanel>
+    <TextBlock Grid.Column="1" x:Name="ClockText" Text="00:00:00" Foreground="#68E0C0" FontSize="14" FontFamily="Consolas" VerticalAlignment="Center"/>
+   </Grid>
+  </Border>
+
+  <Grid Grid.Row="2">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="1.55*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+   <Border Grid.Column="0" Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource PanelBorderBrush}" BorderThickness="1" CornerRadius="16" Padding="22" Margin="0,0,18,0">
+    <Grid>
+     <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+     <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <StackPanel>
+       <TextBlock Text="OUTPUT LEVEL" FontSize="12" FontWeight="Bold" Foreground="{StaticResource MutedBrush}"/>
+       <TextBlock Text="Live rendered audio" FontSize="17" FontWeight="SemiBold" Margin="0,5,0,0"/>
+      </StackPanel>
+      <Border Grid.Column="1" Background="#172A2D" CornerRadius="6" Padding="9,5" VerticalAlignment="Top">
+       <TextBlock Text="STEREO MIX" Foreground="#68E0C0" FontSize="10" FontWeight="Bold"/>
+      </Border>
+     </Grid>
+
+     <Grid Grid.Row="1" Margin="0,28,0,24">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <StackPanel Grid.Column="0" Width="130" VerticalAlignment="Center" Margin="0,0,24,0">
+       <TextBlock Text="RMS" Foreground="{StaticResource MutedBrush}" FontSize="12" FontWeight="Bold"/>
+       <TextBlock x:Name="RmsText" Text="—" FontSize="42" FontWeight="Light" FontFamily="Consolas" Margin="0,2,0,0"/>
+       <TextBlock Text="dBFS average" Foreground="{StaticResource MutedBrush}" FontSize="12"/>
+       <Border Height="1" Background="#263746" Margin="0,18,0,16"/>
+       <TextBlock Text="PEAK" Foreground="{StaticResource MutedBrush}" FontSize="12" FontWeight="Bold"/>
+       <TextBlock x:Name="PeakText" Text="—" FontSize="26" FontWeight="SemiBold" FontFamily="Consolas" Margin="0,3,0,0"/>
+       <TextBlock Text="dBFS" Foreground="{StaticResource MutedBrush}" FontSize="12"/>
+      </StackPanel>
+      <Grid Grid.Column="1" VerticalAlignment="Center" MinHeight="230">
+       <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+       <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBlock Text="SIGNAL METER" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+        <TextBlock x:Name="LevelHintText" Grid.Column="1" Text="Waiting for audio" Foreground="{StaticResource MutedBrush}" FontSize="11"/>
+       </Grid>
+       <Grid Grid.Row="1" Margin="0,14,0,12">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#0A1219" CornerRadius="8" Margin="0,0,5,0" Padding="8">
+         <ProgressBar x:Name="LeftLevelBar" Minimum="0" Maximum="60" Value="0" Height="170" Orientation="Vertical" Foreground="#3DD6A5" Background="#14212B" BorderThickness="0"/>
+        </Border>
+        <Border Grid.Column="1" Background="#0A1219" CornerRadius="8" Margin="5,0,0,0" Padding="8">
+         <ProgressBar x:Name="RightLevelBar" Minimum="0" Maximum="60" Value="0" Height="170" Orientation="Vertical" Foreground="#3DD6A5" Background="#14212B" BorderThickness="0"/>
+        </Border>
+       </Grid>
+       <Grid Grid.Row="2">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <TextBlock Text="L" HorizontalAlignment="Center" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+        <TextBlock Grid.Column="1" Text="R" HorizontalAlignment="Center" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+       </Grid>
+      </Grid>
+     </Grid>
+
+     <Border Grid.Row="2" Background="#0D161F" BorderBrush="#243444" BorderThickness="1" CornerRadius="10" Padding="14,12">
+      <Grid>
+       <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+       <StackPanel>
+        <TextBlock Text="WINDOWS PCM FORMAT RATE" Foreground="{StaticResource MutedBrush}" FontSize="10" FontWeight="Bold"/>
+        <TextBlock Text="Calculated from sample rate × channels × bits per sample" Foreground="#74899C" FontSize="11" Margin="0,4,0,0"/>
+       </StackPanel>
+       <TextBlock Grid.Column="1" x:Name="RenderBitrateText" Text="— Mbps" FontSize="20" FontWeight="SemiBold" FontFamily="Consolas" Foreground="#68E0C0" VerticalAlignment="Center" Margin="12,0,0,0"/>
+      </Grid>
+     </Border>
+    </Grid>
+   </Border>
+
+   <Grid Grid.Column="1">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+    <StackPanel Margin="0,0,0,12">
+     <TextBlock Text="STREAM &amp; NETWORK" FontSize="12" FontWeight="Bold" Foreground="{StaticResource MutedBrush}"/>
+     <TextBlock Text="Current system measurements" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,0"/>
+    </StackPanel>
+    <StackPanel Grid.Row="1">
+     <Border Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource PanelBorderBrush}" BorderThickness="1" CornerRadius="12" Padding="17" Margin="0,0,0,12">
+      <StackPanel>
+       <TextBlock Text="CAPTURE FORMAT" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+       <TextBlock x:Name="FormatText" Text="Start monitoring to read the output format" FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,9,0,0"/>
+       <TextBlock Text="PCM decoded by the Windows audio engine" Foreground="#74899C" FontSize="11" Margin="0,5,0,0"/>
+      </StackPanel>
+     </Border>
+     <Border Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource PanelBorderBrush}" BorderThickness="1" CornerRadius="12" Padding="17" Margin="0,0,0,12">
+      <StackPanel>
+       <TextBlock Text="NETWORK THROUGHPUT" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+       <Grid Margin="0,12,0,0">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <StackPanel>
+         <TextBlock Text="↓  RECEIVE" Foreground="#66B8FF" FontSize="11" FontWeight="Bold"/>
+         <TextBlock x:Name="RxText" Text="—" FontSize="26" FontWeight="SemiBold" FontFamily="Consolas" Margin="0,3,0,0"/>
+         <TextBlock Text="Mbps · all interfaces" Foreground="#74899C" FontSize="10"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+         <TextBlock Text="↑  SEND" Foreground="#E6B766" FontSize="11" FontWeight="Bold"/>
+         <TextBlock x:Name="TxText" Text="—" FontSize="26" FontWeight="SemiBold" FontFamily="Consolas" Margin="0,3,0,0"/>
+         <TextBlock Text="Mbps · all interfaces" Foreground="#74899C" FontSize="10"/>
+        </StackPanel>
+       </Grid>
+      </StackPanel>
+     </Border>
+     <Border Background="#211D16" BorderBrush="#55452D" BorderThickness="1" CornerRadius="12" Padding="15">
+      <StackPanel>
+       <TextBlock Text="ABOUT THESE READINGS" Foreground="#F2C878" FontSize="11" FontWeight="Bold"/>
+       <TextBlock Text="Audio shows Windows' decoded PCM output, not the stream's original compressed bitrate. Network rates are totals for all active interfaces." Foreground="#D0B98D" FontSize="12" TextWrapping="Wrap" Margin="0,7,0,0"/>
+      </StackPanel>
+     </Border>
+    </StackPanel>
+   </Grid>
+  </Grid>
+
+  <Grid Grid.Row="3" Margin="0,16,0,0">
+   <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+   <TextBlock x:Name="FooterText" Text="Ready · Start monitoring, then play audio through the default Windows output" Foreground="{StaticResource MutedBrush}" FontSize="11" VerticalAlignment="Center"/>
+   <TextBlock Grid.Column="1" Text="ENTER START   ·   ESC STOP" Foreground="#61768A" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+  </Grid>
+ </Grid>
+</Window>

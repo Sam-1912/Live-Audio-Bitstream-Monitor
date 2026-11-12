@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.25)
+project(AudioMonitor.Native LANGUAGES CXX)
+add_library(AudioMonitor.Native SHARED AudioCapture.cpp)
+target_compile_features(AudioMonitor.Native PRIVATE cxx_std_20)
+target_compile_definitions(AudioMonitor.Native PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
+target_link_libraries(AudioMonitor.Native PRIVATE ole32 uuid avrt)
+set_target_properties(AudioMonitor.Native PROPERTIES OUTPUT_NAME "AudioMonitor.Native")

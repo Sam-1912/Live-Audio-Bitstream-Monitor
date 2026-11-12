@@ -1,0 +1,36 @@
+# Visual Studio workspace and user-specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output and intermediate files
+[Bb]in/
+[Oo]bj/
+**/x64/
+**/Debug/
+**/Release/
+**/build/
+
+# Native compiler/linker outputs
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.obj
+*.idb
+*.tlog/
+*.recipe
+*.log
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.Local.json
+
+# OS/editor files
+.DS_Store
+Thumbs.db
