@@ -7,6 +7,7 @@ Audio Monitor is a Windows 11 desktop application that follows the Windows defau
 - Captures the current Windows default Multimedia render device through the audio engine
 - Automatically reconnects when the default output changes between built-in speakers, headphones, HDMI, or another render endpoint
 - Measures RMS and peak values in dBFS
+- Displays an eight-band, real-time frequency spectrum with octave-spaced bands from 63 Hz to 8 kHz, computed from captured PCM using a 4096-point FFT
 - Posts sample rate, channel count, and output format details
 - Reads machine-wide RX/TX throughput from Windows network interfaces
 - Supports optional file inspection with ffprobe for accessible media files
@@ -31,13 +32,14 @@ Audio Monitor is a Windows 11 desktop application that follows the Windows defau
 2. Set the solution configuration to `Release` and platform to `x64`.
 3. Build the `AudioMonitor.UI` project or the whole solution. The UI project builds the native WASAPI DLL automatically and copies it beside the executable.
 
-From a terminal, build and run the WPF app (including its native dependency) with:
+From **Developer PowerShell for Visual Studio** (with the Desktop development with C++ workload installed), build and run the WPF app and native analyzer with:
 
 ```powershell
-dotnet restore app\AudioMonitor.UI\AudioMonitor.UI.csproj
-dotnet build app\AudioMonitor.UI\AudioMonitor.UI.csproj -c Release
-dotnet run --project app\AudioMonitor.UI\AudioMonitor.UI.csproj
+msbuild app\AudioMonitor.UI\AudioMonitor.UI.csproj /t:Build /p:Configuration=Release /p:Platform=x64
+& .\app\AudioMonitor.UI\bin\x64\Release\net10.0-windows\win-x64\AudioMonitor.UI.exe
 ```
+
+The spectrum uses a 4096-sample Hann-windowed FFT with overlapping windows. It displays the energy in eight octave-spaced bands centered at 63 Hz through 8 kHz; this is a live frequency analysis of Windows' decoded PCM output, not the streaming service's encoded bitrate.
 
 ## Keyboard controls
 
@@ -56,6 +58,7 @@ The dashboard now includes:
 - a custom application icon and tray icon
 - a live clock in the footer
 - a minimize-to-tray feature for background monitoring
+- an eight-band live frequency spectrum alongside channel level meters
 - a cleaner desktop presentation for quick monitoring sessions
 
 ## Usage

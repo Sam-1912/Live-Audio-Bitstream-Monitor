@@ -16,10 +16,11 @@ Audio Monitor is a desktop utility for observing Windows playback output and mac
 
 ### Option 2: Command line
 
+Open **Developer PowerShell for Visual Studio** with the Desktop development with C++ workload installed, then run:
+
 ```powershell
-dotnet restore app\AudioMonitor.UI\AudioMonitor.UI.csproj
-dotnet build app\AudioMonitor.UI\AudioMonitor.UI.csproj -c Release
-dotnet run --project app\AudioMonitor.UI\AudioMonitor.UI.csproj
+msbuild app\AudioMonitor.UI\AudioMonitor.UI.csproj /t:Build /p:Configuration=Release /p:Platform=x64
+& .\app\AudioMonitor.UI\bin\x64\Release\net10.0-windows\win-x64\AudioMonitor.UI.exe
 ```
 
 ## Keyboard controls
@@ -39,6 +40,7 @@ When monitoring starts, the dashboard will display:
 
 - RMS output level in dBFS
 - Peak output level in dBFS
+- An eight-band frequency spectrum (63 Hz, 125 Hz, 250 Hz, 500 Hz, 1 kHz, 2 kHz, 4 kHz, and 8 kHz) analyzed from live decoded PCM with a 4096-point FFT
 - Network RX rate in Mbps
 - Network TX rate in Mbps
 - Sample rate and channel count

@@ -159,11 +159,48 @@
        </Grid>
       </StackPanel>
      </Border>
-     <Border Background="#211D16" BorderBrush="#55452D" BorderThickness="1" CornerRadius="12" Padding="15">
-      <StackPanel>
-       <TextBlock Text="ABOUT THESE READINGS" Foreground="#F2C878" FontSize="11" FontWeight="Bold"/>
-       <TextBlock Text="Audio shows Windows' decoded PCM output, not the stream's original compressed bitrate. Network rates are totals for all active interfaces." Foreground="#D0B98D" FontSize="12" TextWrapping="Wrap" Margin="0,7,0,0"/>
-      </StackPanel>
+     <Border Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource PanelBorderBrush}" BorderThickness="1" CornerRadius="12" Padding="15">
+      <Grid>
+       <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+       <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <StackPanel>
+         <TextBlock Text="8-BAND SPECTRUM" Foreground="{StaticResource MutedBrush}" FontSize="11" FontWeight="Bold"/>
+         <TextBlock Text="Real-time frequency energy · 4096-point FFT" Foreground="#74899C" FontSize="10" Margin="0,4,0,0"/>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Text="dBFS" Foreground="#74899C" FontSize="10" VerticalAlignment="Top"/>
+       </Grid>
+       <Grid Grid.Row="1" Margin="0,14,0,8">
+        <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <Grid Grid.Row="0" VerticalAlignment="Stretch">
+         <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="*"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+         <Border Grid.Row="0" BorderBrush="#263746" BorderThickness="0,0,0,1"/>
+         <Border Grid.Row="1" BorderBrush="#263746" BorderThickness="0,0,0,1"/>
+         <Border Grid.Row="2" BorderBrush="#263746" BorderThickness="0,0,0,1"/>
+        </Grid>
+        <UniformGrid Grid.Row="0" Columns="8" VerticalAlignment="Bottom" Height="116" Margin="4,0,4,0">
+         <ProgressBar x:Name="Band0Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#4FB4FF" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band1Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#45C7D8" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band2Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#42D5B0" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band3Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#72D67E" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band4Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#B8D75D" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band5Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#E5C653" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band6Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#F0A44B" Background="#152330" BorderThickness="0"/>
+         <ProgressBar x:Name="Band7Bar" Minimum="0" Maximum="60" Value="0" Margin="3,0" Orientation="Vertical" Foreground="#F07861" Background="#152330" BorderThickness="0"/>
+        </UniformGrid>
+        <UniformGrid Grid.Row="1" Columns="8" Margin="0,7,0,0">
+         <TextBlock Text="63" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="125" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="250" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="500" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="1k" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="2k" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="4k" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+         <TextBlock Text="8k" HorizontalAlignment="Center" Foreground="#91A4B8" FontSize="9"/>
+        </UniformGrid>
+       </Grid>
+       <TextBlock Grid.Row="2" Text="Octave bands · 63 Hz — 8 kHz" Foreground="#74899C" FontSize="10"/>
+      </Grid>
      </Border>
     </StackPanel>
    </Grid>

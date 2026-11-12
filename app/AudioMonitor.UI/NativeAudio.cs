@@ -9,7 +9,9 @@ internal static class NativeAudio
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     internal delegate void MetricsCallback(double rmsDb, double peakDb,
         uint sampleRate, uint channels, ulong frames, double estimatedBitrateBps,
-        double leftRmsDb, double rightRmsDb);
+        double leftRmsDb, double rightRmsDb,
+        double band0Db, double band1Db, double band2Db, double band3Db,
+        double band4Db, double band5Db, double band6Db, double band7Db);
 
     internal static int AudioMonitor_Start(MetricsCallback callback)
     {
