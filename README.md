@@ -1,4 +1,8 @@
-# Audio Monitor
+# Audio Monitor — v1.0 Two-Channel Meter
+
+**Version:** 1.0 · **Variant:** two channel meters (L/R), no frequency-band analyzer · **Git branch:** `v1-two-channel` · **Tag:** `v1.0-two-channel`
+
+This is the original two-channel level-meter version. It displays left/right output levels and does **not** calculate frequency bands. For the frequency spectrum version, use [`main` (v2.0, 8-band spectrum)](https://github.com/Sam-1912/Live-Audio-Bitstream-Monitor/tree/main).
 
 Audio Monitor is a Windows 11 desktop application that follows the Windows default Multimedia playback endpoint with WASAPI loopback and displays live audio and network metrics in a mixer-style WPF dashboard. When Windows changes the default output, capture reconnects automatically.
 
@@ -31,12 +35,11 @@ Audio Monitor is a Windows 11 desktop application that follows the Windows defau
 2. Set the solution configuration to `Release` and platform to `x64`.
 3. Build the `AudioMonitor.UI` project or the whole solution. The UI project builds the native WASAPI DLL automatically and copies it beside the executable.
 
-From a terminal, build and run the WPF app (including its native dependency) with:
+From **Developer PowerShell for Visual Studio** (with the Desktop development with C++ workload installed), build and run the app with:
 
 ```powershell
-dotnet restore app\AudioMonitor.UI\AudioMonitor.UI.csproj
-dotnet build app\AudioMonitor.UI\AudioMonitor.UI.csproj -c Release
-dotnet run --project app\AudioMonitor.UI\AudioMonitor.UI.csproj
+msbuild app\AudioMonitor.UI\AudioMonitor.UI.csproj /t:Build /p:Configuration=Release /p:Platform=x64
+& .\app\AudioMonitor.UI\bin\x64\Release\net10.0-windows\win-x64\AudioMonitor.UI.exe
 ```
 
 ## Keyboard controls
