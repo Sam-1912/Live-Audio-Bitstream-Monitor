@@ -2,7 +2,7 @@
 
 ## App purpose
 
-Audio Monitor is a desktop utility for observing Windows playback output and machine-wide network activity. It is designed for the interactive desktop session on Windows 11 and intentionally focuses on the default audio endpoint and interface-level network counters.
+Audio Monitor is a desktop utility for observing Windows playback output and machine-wide network activity. It is designed for the interactive desktop session on Windows 11 and follows the Windows default Multimedia audio endpoint. It automatically reconnects when that default changes, including between built-in speakers, headphones, and HDMI audio.
 
 ## Start the app
 
@@ -54,6 +54,7 @@ The UI depends on `AudioMonitor.Native.dll` from the native capture project. Reb
 - Ensure a sound is playing on the default output device.
 - Make sure the Windows audio endpoint has permission to record loopback output.
 - Confirm the app is running in the active desktop session, not a background service host.
+- The app follows the Windows default Multimedia output and reconnects when it changes, including built-in speakers, headphones, and HDMI render endpoints. You do not need to select a device in the app. If Windows does not switch its default Multimedia output, choose the desired device in Windows Sound settings.
 
 ### No network values
 

@@ -41,7 +41,7 @@
     </Border>
     <StackPanel VerticalAlignment="Center">
      <TextBlock Text="AUDIO MIXER" FontSize="24" FontWeight="Bold"/>
-     <TextBlock Text="LIVE WINDOWS OUTPUT · WASAPI LOOPBACK" FontSize="11" Foreground="{StaticResource MutedBrush}"/>
+     <TextBlock Text="LIVE WINDOWS OUTPUT · WASAPI LOOPBACK · AUTO-SWITCH" FontSize="11" Foreground="{StaticResource MutedBrush}"/>
     </StackPanel>
    </StackPanel>
    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -57,7 +57,7 @@
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
      <Ellipse x:Name="CaptureStatusDot" Width="9" Height="9" Fill="#607487" Margin="0,0,10,0"/>
      <TextBlock x:Name="StatusText" Text="Stopped" FontSize="14" FontWeight="SemiBold"/>
-     <TextBlock Text="  ·  Default playback device" FontSize="13" Foreground="{StaticResource MutedBrush}"/>
+     <TextBlock Text="  ·  Windows default output · auto-switch enabled" FontSize="13" Foreground="{StaticResource MutedBrush}"/>
     </StackPanel>
     <TextBlock Grid.Column="1" x:Name="ClockText" Text="00:00:00" Foreground="#68E0C0" FontSize="14" FontFamily="Consolas" VerticalAlignment="Center"/>
    </Grid>

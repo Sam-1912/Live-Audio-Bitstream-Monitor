@@ -1,10 +1,11 @@
 # Audio Monitor
 
-Audio Monitor is a Windows 11 desktop application that watches the default playback device with WASAPI loopback and displays live audio and network metrics in a small WPF dashboard.
+Audio Monitor is a Windows 11 desktop application that follows the Windows default Multimedia playback endpoint with WASAPI loopback and displays live audio and network metrics in a mixer-style WPF dashboard. When Windows changes the default output, capture reconnects automatically.
 
 ## What it does
 
-- Captures the default render device through the Windows audio engine
+- Captures the current Windows default Multimedia render device through the audio engine
+- Automatically reconnects when the default output changes between built-in speakers, headphones, HDMI, or another render endpoint
 - Measures RMS and peak values in dBFS
 - Posts sample rate, channel count, and output format details
 - Reads machine-wide RX/TX throughput from Windows network interfaces
@@ -68,6 +69,7 @@ The dashboard now includes:
 ## Important notes
 
 - This app captures decoded PCM from the default render endpoint; it does not recover original encoded bitrate from protected or arbitrary app streams.
+- The capture automatically follows Windows' default Multimedia playback endpoint and reconnects when it changes, such as when switching between built-in speakers, headphones, or HDMI audio. No in-app device selection is needed; Windows must make the chosen endpoint the default Multimedia output.
 - Network values are machine-wide interface counters, not per-process browser or app attribution.
 - For media inspection, ffprobe must be pointed at an accessible file that the current user can read.
 
@@ -80,6 +82,7 @@ The dashboard now includes:
 ## Troubleshooting
 
 - If the build reports missing C++ tools, install Visual Studio's Desktop development with C++ workload and a Windows SDK, then rebuild the UI project. Its build also compiles and copies `AudioMonitor.Native.dll`.
+- If you plug in headphones or switch to HDMI while monitoring, the app follows the Windows default Multimedia output and reconnects automatically. If Windows does not make the new device the default Multimedia output, select it in Windows Sound settings.
 - If audio values stay flat at `-120 dBFS`, ensure the default playback device is active and a media stream is playing.
 - If the app shows no network values, ensure at least one active network interface is available and the machine is transmitting or receiving traffic.
 

@@ -121,7 +121,7 @@ public partial class MainWindow : Window
             }
             _started = true;
             StartButton.IsEnabled = false; StopButton.IsEnabled = true;
-            StatusText.Text = "Monitoring live output";
+            StatusText.Text = "Monitoring Windows default Multimedia output";
             CaptureStatusDot.Fill = WpfBrushes.MediumSpringGreen;
             FooterText.Text = "WASAPI loopback active · Play audio through the default Windows output";
             _network.Sample();
