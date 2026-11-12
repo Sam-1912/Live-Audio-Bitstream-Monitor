@@ -1,4 +1,8 @@
-# Audio Monitor
+# Audio Monitor — v2.0 Eight-Band Spectrum
+
+**Version:** 2.0 · **Variant:** real-time 8-band frequency analyzer · **Git branch:** `main` · **Tag:** `v2.0-eight-band`
+
+This is the current release, with a live eight-band frequency spectrum and left/right level meters. The earlier two-channel level-meter release (without frequency analysis) is preserved on the [`v1-two-channel` branch](https://github.com/Sam-1912/Live-Audio-Bitstream-Monitor/tree/v1-two-channel) and tagged [`v1.0-two-channel`](https://github.com/Sam-1912/Live-Audio-Bitstream-Monitor/releases/tag/v1.0-two-channel).
 
 Audio Monitor is a Windows 11 desktop application that follows the Windows default Multimedia playback endpoint with WASAPI loopback and displays live audio and network metrics in a mixer-style WPF dashboard. When Windows changes the default output, capture reconnects automatically.
 
@@ -7,7 +11,8 @@ Audio Monitor is a Windows 11 desktop application that follows the Windows defau
 - Captures the current Windows default Multimedia render device through the audio engine
 - Automatically reconnects when the default output changes between built-in speakers, headphones, HDMI, or another render endpoint
 - Measures RMS and peak values in dBFS
-- Displays an eight-band, real-time frequency spectrum with octave-spaced bands from 63 Hz to 8 kHz, computed from captured PCM using a 4096-point FFT
+- Shows an eight-band spectrum (63 Hz to 8 kHz) computed from live decoded PCM using a 4096-point FFT
+- Displays separate left/right output level meters
 - Posts sample rate, channel count, and output format details
 - Reads machine-wide RX/TX throughput from Windows network interfaces
 - Supports optional file inspection with ffprobe for accessible media files
